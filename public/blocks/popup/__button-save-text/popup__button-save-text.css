@@ -1,0 +1,7 @@
+.popup__button-save-text {
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
