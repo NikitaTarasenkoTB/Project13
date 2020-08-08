@@ -1,0 +1,29 @@
+const mongoose = require('mongoose');
+
+// eslint-disable-next-line no-useless-escape
+const urlMask = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 30,
+  },
+  about: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 30,
+  },
+  avatar: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (validateItem) => urlMask.test(validateItem),
+      message: (wrongItem) => `${wrongItem.value} не ссылка!`,
+    },
+  },
+});
+
+module.exports = mongoose.model('user', userSchema);
