@@ -1,5 +1,4 @@
-# Проектная работа 13. Подлкючение быза данных и работы с mongoDB.
-## Ссылка на GitHub Pages: **_https://nikitatarasenkotb.github.io/Project13/_**
+# Проектная работа 13. Подлкючение быза данных и работа с mongoDB.
 
 Клонирование репозитория: *git clone git@github.com:NikitaTarasenkoTB/Project13.git project13* 
 
