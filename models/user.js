@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
-// eslint-disable-next-line no-useless-escape
-const urlMask = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -20,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (validateItem) => urlMask.test(validateItem),
+      validator: (validateItem) => validator.isURL(validateItem),
       message: (wrongItem) => `${wrongItem.value} не ссылка!`,
     },
   },

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
-// eslint-disable-next-line no-useless-escape
-const urlMask = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
+const validator = require('validator');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -14,7 +12,7 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (validateItem) => urlMask.test(validateItem),
+      validator: (validateItem) => validator.isURL(validateItem),
       message: (wrongItem) => `${wrongItem.value} не ссылка!`,
     },
   },
@@ -25,7 +23,6 @@ const cardSchema = new mongoose.Schema({
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    // default: undefined
   }],
   createdAt: {
     type: Date,

@@ -19,8 +19,38 @@ function postUser(request, response) {
     .catch((error) => response.status(400).send({ message: error.message }));
 }
 
+function updateProfileName(request, response) {
+  User.findByIdAndUpdate(
+    request.user._id,
+    { name: request.body.name },
+    {
+      new: true,
+      runValidators: true,
+      upset: true,
+    },
+  )
+    .then((updatedData) => response.send({ data: updatedData }))
+    .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка или не пройдена валидация' }));
+}
+
+function updateAvatar(request, response) {
+  User.findByIdAndUpdate(
+    request.user._id,
+    { avatar: request.body.avatar },
+    {
+      new: true,
+      runValidators: true,
+      upset: true,
+    },
+  )
+    .then((updatedData) => response.send({ data: updatedData }))
+    .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка или не пройдена валидация' }));
+}
+
 module.exports = {
   getUsers,
   getUser,
   postUser,
+  updateProfileName,
+  updateAvatar,
 };

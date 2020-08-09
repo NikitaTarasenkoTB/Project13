@@ -15,12 +15,44 @@ function postCard(request, response) {
 
 function deleteCard(request, response) {
   Card.findByIdAndRemove(request.params.cardId)
-    .then((cardData) => response.send({ data: cardData }))
+    .then((cardData) => {
+      cardData ? response.send({ data: cardData }) : response.status(404).send({ message: 'Карточка не найдена' });
+    })
     .catch(() => response.status(404).send({ message: 'Карточка не найдена' }));
+}
+
+function addLike(request, response) {
+  Card.findByIdAndUpdate(
+    request.params.cardId,
+    { $addToSet: { likes: request.user._id } },
+    {
+      new: true,
+      runValidators: true,
+      upsert: true,
+    },
+  )
+    .then((newLikeData) => response.send({ message: newLikeData }))
+    .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка' }));
+}
+
+function removeLike(request, response) {
+  Card.findByIdAndUpdate(
+    request.params.cardId,
+    { $pull: { likes: request.user._id } },
+    {
+      new: true,
+      runValidators: true,
+      upsert: true,
+    },
+  )
+    .then((newLikeData) => response.send({ message: newLikeData }))
+    .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка' }));
 }
 
 module.exports = {
   getCards,
   postCard,
   deleteCard,
+  addLike,
+  removeLike,
 };

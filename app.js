@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((request, response, next) => {
-  request.user = { _id: '5f2f07ea3ee4531e00181e65' };
+  request.user = { _id: '5f30033939f2e52ffc29c622' };
   next();
 });
 
