@@ -28,10 +28,11 @@ function addLike(request, response) {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
-    .then((newLikeData) => response.send({ message: newLikeData }))
+    .then((newLikeData) => {
+      newLikeData ? response.send({ message: newLikeData }) : response.status(404).send({ message: 'Карточка не найдена' });
+    })
     .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка' }));
 }
 
@@ -42,10 +43,11 @@ function removeLike(request, response) {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
-    .then((newLikeData) => response.send({ message: newLikeData }))
+    .then((newLikeData) => {
+      newLikeData ? response.send({ message: newLikeData }) : response.status(404).send({ message: 'Карточка не найдена' });
+    })
     .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка' }));
 }
 

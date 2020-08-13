@@ -8,7 +8,9 @@ function getUsers(request, response) {
 
 function getUser(request, response) {
   User.findById(request.params.id)
-    .then((userData) => response.send({ data: userData }))
+    .then((userData) => {
+      userData ? response.send({ data: userData }) : response.status(404).send({ message: 'Такого пользователя нет' });
+    })
     .catch(() => response.status(404).send({ message: 'Такого пользователя нет' }));
 }
 
@@ -26,10 +28,11 @@ function updateProfileName(request, response) {
     {
       new: true,
       runValidators: true,
-      upset: true,
     },
   )
-    .then((updatedData) => response.send({ data: updatedData }))
+    .then((updatedData) => {
+      updatedData ? response.send({ data: updatedData }) : response.status(404).send({ message: 'Такого пользователя нет' });
+    })
     .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка или не пройдена валидация' }));
 }
 
@@ -40,10 +43,11 @@ function updateAvatar(request, response) {
     {
       new: true,
       runValidators: true,
-      upset: true,
     },
   )
-    .then((updatedData) => response.send({ data: updatedData }))
+    .then((updatedData) => {
+      updatedData ? response.send({ data: updatedData }) : response.status(404).send({ message: 'Такого пользователя нет' });
+    })
     .catch(() => response.status(500).send({ message: 'На сервере произошла ошибка или не пройдена валидация' }));
 }
 
