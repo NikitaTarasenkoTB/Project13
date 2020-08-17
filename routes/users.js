@@ -1,30 +1,13 @@
 const usersRouter = require('express').Router();
-const path = require('path');
-const fs = require('fs');
 
-let users = [];
+const {
+  getUsers, getUser, postUser, updateProfileName, updateAvatar,
+} = require('../controllers/users');
 
-fs.readFile(path.join(__dirname, '../data/users.json'), (error, data) => {
-  if (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
-    return;
-  }
-  users = JSON.parse(data);
-});
-
-usersRouter.get('/users', (request, response) => {
-  response.send(users);
-});
-
-usersRouter.get('/users/:id', (request, response) => {
-  // eslint-disable-next-line no-underscore-dangle
-  const currentUser = users.find((item) => item._id === request.params.id);
-  if (!currentUser) {
-    response.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
-    return;
-  }
-  response.send(currentUser);
-});
+usersRouter.get('/users', getUsers);
+usersRouter.get('/users/:id', getUser);
+usersRouter.post('/users', postUser);
+usersRouter.patch('/users/me', updateProfileName);
+usersRouter.patch('/users/me/avatar', updateAvatar);
 
 module.exports = usersRouter;
